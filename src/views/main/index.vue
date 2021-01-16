@@ -54,7 +54,11 @@
       </el-aside>
       <el-container>
         <el-header>内衣买小了不结婚了</el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <div class="main-body">
+            <router-view/>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -102,6 +106,8 @@ name: "index"
   background-color: #E9EEF3;
   color: #444;
   text-align: center;
+  padding: 0px;
+  overflow: hidden;
 }
 
 .el-container {
@@ -116,5 +122,12 @@ name: "index"
   height: calc(100% - 70px);
   width: 100%;
   overflow-x: hidden;
+}
+
+.main-body {
+  background-color: #fff;
+  height: 100%;
+  margin: 10px 0px 0px 10px;
+  padding: 20px 0px 0px 20px;
 }
 </style>
