@@ -20,4 +20,8 @@ html,body,.box {
   height: 100%;
   width: 100%;
 }
+
+.el-scrollbar__wrap{
+  overflow-x: hidden;
+}
 </style>

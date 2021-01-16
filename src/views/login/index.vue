@@ -4,12 +4,9 @@
   </div>
 </template>
 
-<script>
-export default {
-name: "index"
-}
+<script src="./index.js">
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+@import "index";
 </style>

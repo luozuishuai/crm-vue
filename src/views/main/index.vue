@@ -7,6 +7,7 @@
           <span>后台管理系统</span>
         </div>
         <el-scrollbar class="scrollbar">
+<!--          侧边菜单栏-->
         <el-menu
             default-active="1"
             class="el-menu-vertical-demo">
@@ -64,70 +65,8 @@
   </div>
 </template>
 
-<script>
-export default {
-name: "index"
-}
+<script src="./index.js">
 </script>
 
-<style scoped>
-.el-header {
-  background-color: #F56C6C;
-  color: #fff;
-  text-align: center;
-  line-height: 60px;
-}
-
-.el-aside {
-  background-color: #fff;
-  color: #444;
-}
-
-.title-wrapper {
-  line-height: 60px;
-  background-color: #F56C6C;
-}
-
-.title-wrapper img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  vertical-align: middle;
-  margin: 0 8px 0 10px;
-}
-
-.title-wrapper span {
-  font-weight: 700;
-  color: white;
-  font-size: 18px;
-}
-
-.el-main {
-  background-color: #E9EEF3;
-  color: #444;
-  text-align: center;
-  padding: 0px;
-  overflow: hidden;
-}
-
-.el-container {
-  height: 100%;
-}
-
-.main-box {
-  height: 100%;
-}
-
-.scrollbar {
-  height: calc(100% - 70px);
-  width: 100%;
-  overflow-x: hidden;
-}
-
-.main-body {
-  background-color: #fff;
-  height: 100%;
-  margin: 10px 0px 0px 10px;
-  padding: 20px 0px 0px 20px;
-}
+<style scoped lang="less" src="./index.less">
 </style>
