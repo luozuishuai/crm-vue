@@ -1,18 +1,39 @@
-import supplier from "@/api/supplier";
+import category from "@/api/category";
+// import the component
+import Treeselect from '@riophae/vue-treeselect';
+// import the styles
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 export default {
     name: "index",
+    components: { Treeselect },
     data() {
         return {
             tableData: [],
-            currentPage: 1,
-            pageSize: 5,
             total:0,
+            currentPage:1,
+            pageSize:5,
             editDialog:false,
             delDialog:false,
-            action:"新增供应商",
+            action:"新增分类",
             formData: {},
             ids: [],
+            options: [],
+            categoryLevelList:[
+                {
+                    id:0,
+                    categoryName:"主分类",
+                    children:[]
+                }
+
+            ],
+            normalizer(node) {
+                return {
+                    id: node.id,
+                    label: node.categoryName,
+                    children: node.children,
+                }
+            },
         }
     },
 
@@ -21,20 +42,22 @@ export default {
     },
 
     methods: {
+
         async findAll() {
-            let response = await supplier.findAll(this.currentPage, this.pageSize);
-            console.log(response);
+            let response = await category.getTreeData(this.currentPage,this.pageSize);
             this.tableData = response.list;
             this.total = response.total;
+            this.categoryLevelList[0].children = this.tableData;
         },
+
         async addOrEdit(){
             // console.log("aaaaaaaa")
             if(this.formData.id){
                 //修改
-                await supplier.updateEntity(this.formData);
+                await category.updateEntity(this.formData);
             }else{
                 //新增
-                await supplier.addEntity(this.formData);
+                await category.addEntity(this.formData);
             }
             this.findAll();
         },
@@ -43,8 +66,8 @@ export default {
             this.findAll();
         },
         async findById(id){
-            this.action = "编辑供应商";
-            this.formData = await supplier.findById(id);
+            this.action = "编辑分类";
+            this.formData = await category.findById(id);
         },
         selectionChangeListener(selection){
             // console.log(selection);
@@ -58,9 +81,9 @@ export default {
                 this.$notify.error({
                     title: '错误',
                     message: '请先勾选要删除的记录'
-                });
+                })
             }else{
-                await supplier.deleteByIds(this.ids);
+                await category.deleteByIds(this.ids);
                 this.findAll();
             }
         },

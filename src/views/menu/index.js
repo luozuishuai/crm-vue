@@ -1,7 +1,12 @@
-import supplier from "@/api/supplier";
+import menu from "@/api/menu";
+// import the component
+import Treeselect from '@riophae/vue-treeselect';
+// import the styles
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 export default {
     name: "index",
+    components: { Treeselect },
     data() {
         return {
             tableData: [],
@@ -10,9 +15,24 @@ export default {
             total:0,
             editDialog:false,
             delDialog:false,
-            action:"新增供应商",
+            action:"新增菜单",
             formData: {},
             ids: [],
+            options: [],
+            menuLevelList:[
+                {
+                    id:0,
+                    menuName:"主菜单",
+                    children:[]
+                }
+            ],
+            normalizer(node) {
+                return {
+                    id: node.id,
+                    label: node.menuName,
+                    children: node.children,
+                }
+            },
         }
     },
 
@@ -22,19 +42,18 @@ export default {
 
     methods: {
         async findAll() {
-            let response = await supplier.findAll(this.currentPage, this.pageSize);
-            console.log(response);
+            let response = await menu.findAll(this.currentPage, this.pageSize);
             this.tableData = response.list;
             this.total = response.total;
+            this.menuLevelList[0].children = this.tableData;
         },
         async addOrEdit(){
-            // console.log("aaaaaaaa")
             if(this.formData.id){
                 //修改
-                await supplier.updateEntity(this.formData);
+                await menu.updateEntity(this.formData);
             }else{
                 //新增
-                await supplier.addEntity(this.formData);
+                await menu.addEntity(this.formData);
             }
             this.findAll();
         },
@@ -43,8 +62,8 @@ export default {
             this.findAll();
         },
         async findById(id){
-            this.action = "编辑供应商";
-            this.formData = await supplier.findById(id);
+            this.action = "编辑菜单";
+            this.formData = await menu.findById(id);
         },
         selectionChangeListener(selection){
             // console.log(selection);
@@ -60,7 +79,7 @@ export default {
                     message: '请先勾选要删除的记录'
                 });
             }else{
-                await supplier.deleteByIds(this.ids);
+                await menu.deleteByIds(this.ids);
                 this.findAll();
             }
         },

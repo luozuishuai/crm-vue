@@ -1,4 +1,4 @@
-import supplier from "@/api/supplier";
+import role from "@/api/role";
 
 export default {
     name: "index",
@@ -10,32 +10,45 @@ export default {
             total:0,
             editDialog:false,
             delDialog:false,
-            action:"新增供应商",
+            action:"新增角色",
             formData: {},
             ids: [],
+            allMenuList:[],
+            defaultProps: {
+                children: 'children',
+                label: 'menuName'
+            }
         }
     },
 
     created() {
         this.findAll();
+        this.getAllMenuTreeData();
     },
 
     methods: {
         async findAll() {
-            let response = await supplier.findAll(this.currentPage, this.pageSize);
-            console.log(response);
+            let response = await role.findAll(this.currentPage, this.pageSize);
             this.tableData = response.list;
             this.total = response.total;
         },
+        async getAllMenuTreeData(){
+            this.allMenuList = await role.getAllMenuTreeData();
+            console.log(this.allMenuList);
+        },
         async addOrEdit(){
-            // console.log("aaaaaaaa")
+            //保存勾选中的权限
+            this.formData.menuIds = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys());
+
             if(this.formData.id){
                 //修改
-                await supplier.updateEntity(this.formData);
+                await role.updateEntity(this.formData);
             }else{
                 //新增
-                await supplier.addEntity(this.formData);
+                await role.addEntity(this.formData);
             }
+            //清空权限勾选状态
+            this.$refs.tree.setCheckedKeys([]);
             this.findAll();
         },
         pageChange(page){
@@ -43,8 +56,9 @@ export default {
             this.findAll();
         },
         async findById(id){
-            this.action = "编辑供应商";
-            this.formData = await supplier.findById(id);
+            this.action = "编辑角色";
+            this.formData = await role.findById(id);
+            this.$refs.tree.setCheckedKeys(this.formData.menuIds);
         },
         selectionChangeListener(selection){
             // console.log(selection);
@@ -60,7 +74,7 @@ export default {
                     message: '请先勾选要删除的记录'
                 });
             }else{
-                await supplier.deleteByIds(this.ids);
+                await role.deleteByIds(this.ids);
                 this.findAll();
             }
         },

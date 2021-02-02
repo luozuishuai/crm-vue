@@ -28,7 +28,33 @@ const routes = [
         path:"supplier",
         name:"supplier",
         component: () => import("../views/supplier/index.vue")
-      }
+      },
+      {
+        path:"category",
+        name:"category",
+        component: () => import("../views/category/index.vue")
+      },
+      {
+        path:"brand",
+        name:"brand",
+        component: () => import("../views/brand/index.vue")
+      },
+      {
+        path:"admin",
+        name:"admin",
+        component: () => import("../views/admin/index.vue")
+      },
+
+      {
+        path:"role",
+        name:"role",
+        component: () => import("../views/role/index.vue")
+      },
+      {
+        path:"menu",
+        name:"menu",
+        component: () => import("../views/menu/index.vue")
+      },
     ]
   }
 ]

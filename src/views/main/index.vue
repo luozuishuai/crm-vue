@@ -6,58 +6,27 @@
           <img src="../../assets/leijun.jpg" alt="">
           <span>后台管理系统</span>
         </div>
-        <el-scrollbar class="scrollbar">
-<!--          侧边菜单栏-->
-        <el-menu
-            default-active="1"
-            class="el-menu-vertical-demo">
 
-<!--          不能展开的-->
-          <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">系统首页</span>
-          </el-menu-item>
-          <!--          能展开的-->
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品相关</span>
-            </template>
+          <el-scrollbar class="scrollbar">
+            <!--          侧边菜单栏-->
+            <el-menu
+                :default-active="$route.path"
+                router
+                class="el-menu-vertical-demo">
 
-            <!--          不能展开的-->
-            <el-menu-item index="2-1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">品牌管理</span>
-            </el-menu-item>
+              <menu-item v-for="(item,index) in menuList" :key="index" :item="item"/>
 
-            <!--          不能展开的-->
-            <el-menu-item index="2-2">
-              <i class="el-icon-menu"></i>
-              <span slot="title">分类管理</span>
-            </el-menu-item>
+            </el-menu>
+          </el-scrollbar>
 
-            <!--          不能展开的-->
-            <el-menu-item index="2-3">
-              <i class="el-icon-menu"></i>
-              <span slot="title">商品管理</span>
-            </el-menu-item>
-
-          </el-submenu>
-
-          <!--          不能展开的-->
-          <el-menu-item index="3">
-            <i class="el-icon-menu"></i>
-            <span slot="title">运营商管理</span>
-          </el-menu-item>
-
-        </el-menu>
-        </el-scrollbar>
       </el-aside>
       <el-container>
-        <el-header>内衣买小了不结婚了</el-header>
+        <el-header>欢迎登陆后台管理系统</el-header>
         <el-main>
           <div class="main-body">
+            <el-scrollbar style="height: 100%">
             <router-view/>
+            </el-scrollbar>
           </div>
         </el-main>
       </el-container>
@@ -66,6 +35,7 @@
 </template>
 
 <script src="./index.js">
+
 </script>
 
 <style scoped lang="less" src="./index.less">

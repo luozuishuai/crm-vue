@@ -1,4 +1,4 @@
-import supplier from "@/api/supplier";
+import brand from "@/api/brand";
 
 export default {
     name: "index",
@@ -13,6 +13,7 @@ export default {
             action:"新增供应商",
             formData: {},
             ids: [],
+            imageUrl:'',
         }
     },
 
@@ -22,8 +23,8 @@ export default {
 
     methods: {
         async findAll() {
-            let response = await supplier.findAll(this.currentPage, this.pageSize);
-            console.log(response);
+            let response = await brand.findAll(this.currentPage, this.pageSize);
+            // console.log(response);
             this.tableData = response.list;
             this.total = response.total;
         },
@@ -31,10 +32,12 @@ export default {
             // console.log("aaaaaaaa")
             if(this.formData.id){
                 //修改
-                await supplier.updateEntity(this.formData);
+                console.log(this.formData);
+                await brand.updateEntity(this.formData);
             }else{
                 //新增
-                await supplier.addEntity(this.formData);
+                console.log(this.formData);
+                await brand.addEntity(this.formData);
             }
             this.findAll();
         },
@@ -43,8 +46,8 @@ export default {
             this.findAll();
         },
         async findById(id){
-            this.action = "编辑供应商";
-            this.formData = await supplier.findById(id);
+            this.action = "编辑分类";
+            this.formData = await brand.findById(id);
         },
         selectionChangeListener(selection){
             // console.log(selection);
@@ -60,7 +63,7 @@ export default {
                     message: '请先勾选要删除的记录'
                 });
             }else{
-                await supplier.deleteByIds(this.ids);
+                await brand.deleteByIds(this.ids);
                 this.findAll();
             }
         },
@@ -69,7 +72,25 @@ export default {
             this.$refs.selection.clearSelection();
             this.ids = [];
             this.ids.push(id);
-        }
+        },
+        async avatarUpload(chooseFile) {
+            var filedata = new FormData();
+            filedata.append("file", chooseFile.file);
+            this.imageUrl = await brand.uploadAvatar(filedata);
+            this.formData.brandLogo = this.imageUrl;
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isJPG) {
+                this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+            }
+            if (!isLt2M) {
+                this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
+        },
 
     }
 }
