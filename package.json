@@ -2,15 +2,19 @@
   "name": "crm-vue",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://luozuishuai.github.io/crm-vue/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "^0.4.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "crm": "^1.0.1",
     "element-ui": "^2.14.1",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
@@ -26,6 +30,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "gh-pages": "^4.0.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "vue-template-compiler": "^2.6.11"
